@@ -2,10 +2,14 @@ package com.robot.client;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.robot.bean.SocketInfo;
 
@@ -22,18 +26,8 @@ public class RobotClient {
 	//private long heartbeatDelayMillis = 5000;
 	
 	public RobotClient(final String server, final int port) {
-		inf = new SocketInfo("online");
-		try {
-			connect(server,port);
-			logger.info("Connected...");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error(e);
-			inf.setState("offline");
-			System.exit(0);
-		}
-        
+		inf = new SocketInfo("Online");	
+		connect(server,port);
 	}
 	
 	public void closeCon() {
@@ -44,42 +38,82 @@ public class RobotClient {
 			// TODO Auto-generated catch block
 			logger.error(e + ": Problem with close");
 			e.printStackTrace();
-			inf.setState("offline");
+			inf.setState("Offline");
 		}
 	}
 	
-	public void connect(String server, int port) throws InterruptedException {
-		try {
-            socket = new Socket(server, port);
-            ps = new PrintStream(socket.getOutputStream());
-            inf.setState("online");
-        } catch (UnknownHostException e) {
-            logger.error(e, e);
-            inf.setState("offline");
-            Thread.sleep(5000);
-            connect(server, port);
-        } catch (IOException e) {
-            logger.error(e, e);
-            inf.setState("offline");
-            Thread.sleep(5000);
-            connect(server, port);
-        }
+	public void connect(String server, int port) {
+
+        try {
+			socket = new Socket(server, port);
+			ps = new PrintStream(socket.getOutputStream());
+	        inf.setState("Online");
+	        logger.info("Socket is connected");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			inf.setState("Offline");
+			logger.error("UnknownHostException connect: offline");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			inf.setState("Offline");
+			logger.error("IOException connect: offline");
+		}
+        
+        
 	}
 	
 	public void send(String s, float x, float y, float z) {
-		
-		if(s.equals("y")) {
-			ps.println(s);
-			ps.println(x);
-			ps.println(y);
-			ps.println(z);
+		if( ps != null ) {
+			if(s.equals("y")) {
+				ps.println(s);
+				ps.println(x);
+				ps.println(y);
+				ps.println(z);
+			}else {
+				ps.println("exit");
+			}
 		}else {
-			ps.println("exit");
+			inf.setState("Offline");
+			System.out.println("ps: offline");
 		}
 
 	}
 	
 	public SocketInfo getSocketInfo() {
-		return inf;
+		SocketInfo info = this.inf;
+		return info;
+	}
+	
+	public void setSocketInfo(String state) {
+		this.inf.setState(state);
+	}
+	
+	public boolean isSocketAlive(String hostName, int port) {
+		boolean isAlive = false;
+ 
+		// Creates a socket address from a hostname and a port number
+		SocketAddress socketAddress = new InetSocketAddress(hostName, port);
+		Socket socket = new Socket();
+ 
+		// Timeout required - it's in milliseconds
+		int timeout = 2000;
+ 
+		logger.info("hostName: " + hostName + ", port: " + port);
+		try {
+			socket.connect(socketAddress, timeout);
+			socket.close();
+			isAlive = true;
+ 
+		} catch (SocketTimeoutException exception) {
+			logger.error("SocketTimeoutException " + hostName + ":" + port + ". " + exception.getMessage());
+			inf.setState("Offline");
+		} catch (IOException exception) {
+			logger.error(
+					"IOException - Unable to connect to " + hostName + ":" + port + ". " + exception.getMessage());
+			inf.setState("Offline");
+		}
+		return isAlive;
 	}
 }

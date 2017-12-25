@@ -1,7 +1,8 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c2" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-<%@ page session="false" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +121,7 @@
         </div>
         <div class="pull-left info">
           <p>Diego Benavides</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> <c:out value="${info.state}" /></a>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- search form -->
@@ -162,7 +163,7 @@
     <section class="content-header">
       <h1>
         RobotABB
-        <small>Online</small>
+        <small><c2:out value="${info.state}" /></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

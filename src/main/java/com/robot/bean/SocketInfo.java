@@ -1,7 +1,7 @@
 package com.robot.bean;
 
 public class SocketInfo {
-	private String state;
+	private String state = "Online";
 	
 	public SocketInfo() {}
 	

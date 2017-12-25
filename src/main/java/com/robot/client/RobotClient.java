@@ -71,7 +71,7 @@ public class RobotClient {
 			}
 		}else {
 			inf.setState("Offline");
-			System.out.println("ps: offline");
+			logger.info("ps: null - offline");
 		}
 
 	}

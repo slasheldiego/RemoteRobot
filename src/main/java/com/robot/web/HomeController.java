@@ -53,17 +53,15 @@ public class HomeController {
 					if(client.getSocketInfo().getState().equals("Offline")) {
 						initClient(server,port);
 					}
-				logger.info("Socket is connected...");
+				logger.info("move: Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
 				sendCoordinates(move);
-				System.out.println("Online: "+client.getSocketInfo().getState());
 		    		return "home";
 			}else {
-				logger.error("Socket is not connected...");
+				logger.error("move: Socket is not connected...");
 				client.setSocketInfo("Offline");
 				SocketInfo info = new SocketInfo("Offline");
 				model.addAttribute("info",info);
-				System.out.println("move: Offline");
 				return "redirect:/";
 			}
 		

@@ -25,10 +25,10 @@ public class HomeController {
 	private final String server = "localhost";
 	private final int port = 25557;
 	
-	/*@Autowired
+	@Autowired
 	public HomeController(RobotClient client) {
 		this.client = client;
-	}*/
+	}
 	
 	@RequestMapping(method=GET)
 	public String home(Model model) {
@@ -50,10 +50,13 @@ public class HomeController {
 	public String move(Model model,
 			@ModelAttribute("Move") RobotMovement move) {
 			if( client.isSocketAlive(server, port) ) {
+					if(client.getSocketInfo().getState().equals("Offline")) {
+						initClient(server,port);
+					}
 				logger.info("Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
 				sendCoordinates(move);
-				System.out.println("Online");
+				System.out.println("Online: "+client.getSocketInfo().getState());
 		    		return "home";
 			}else {
 				logger.error("Socket is not connected...");
@@ -67,7 +70,7 @@ public class HomeController {
 	}
 	
 	public void initClient(String server, int port) {
-			client = new RobotClient(server,port);
+			client.connect(server,port);
 	}
 	
 	public void sendCoordinates(RobotMovement move) {

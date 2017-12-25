@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.robot.bean.SocketInfo;
 
-
+@Component
 public class RobotClient {
 	
 	final static Logger logger = Logger.getLogger(RobotClient.class);
@@ -24,11 +24,6 @@ public class RobotClient {
 	//private final Thread heartbeatThread;
 	//private boolean tryToReconnect = true;
 	//private long heartbeatDelayMillis = 5000;
-	
-	public RobotClient(final String server, final int port) {
-		inf = new SocketInfo("Online");	
-		connect(server,port);
-	}
 	
 	public void closeCon() {
 		try {
@@ -43,7 +38,7 @@ public class RobotClient {
 	}
 	
 	public void connect(String server, int port) {
-
+		inf = new SocketInfo("Online");
         try {
 			socket = new Socket(server, port);
 			ps = new PrintStream(socket.getOutputStream());

@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,14 +22,16 @@ public class HomeController {
 	
 	final static Logger logger = Logger.getLogger(HomeController.class);
 	
-	private RobotClient client;
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+	
+	private RobotClient client = (RobotClient) context.getBean("robotClient");
 	private final String server = "localhost";
 	private final int port = 25557;
 	
-	@Autowired
+	/*@Autowired
 	public HomeController(RobotClient client) {
 		this.client = client;
-	}
+	}*/
 	
 	@RequestMapping(method=GET)
 	public String home(Model model) {

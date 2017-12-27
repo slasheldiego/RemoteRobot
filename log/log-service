@@ -5382,3 +5382,30 @@ java.net.ConnectException: Connection refused (Connection refused)
 2017-12-25 12:54:33 INFO  HomeController:56 - Socket is connected...
 2017-12-25 12:54:40 INFO  RobotClient:98 - hostName: localhost, port: 25557
 2017-12-25 12:54:40 INFO  HomeController:56 - Socket is connected...
+2017-12-26 21:36:38 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2017-12-26 21:36:39 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:36:39 INFO  HomeController:40 - RobotClient: not null
+2017-12-26 21:36:54 INFO  RobotClientImpl:46 - Socket is connected
+2017-12-26 21:36:54 INFO  HomeController:40 - RobotClient: not null
+2017-12-26 21:37:14 INFO  RobotClientImpl:98 - hostName: localhost, port: 25557
+2017-12-26 21:37:14 INFO  HomeController:56 - move: Socket is connected...
+2017-12-26 21:37:25 INFO  RobotClientImpl:98 - hostName: localhost, port: 25557
+2017-12-26 21:37:25 ERROR RobotClientImpl:108 - IOException - Unable to connect to localhost:25557. Connection refused (Connection refused)
+2017-12-26 21:37:25 ERROR HomeController:61 - move: Socket is not connected...
+2017-12-26 21:37:25 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:37:25 INFO  HomeController:40 - RobotClient: not null
+2017-12-26 21:52:15 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2017-12-26 21:52:16 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:52:16 INFO  HomeController:43 - RobotClient: not null
+2017-12-26 21:52:27 INFO  RobotClientImpl:98 - hostName: localhost, port: 25557
+2017-12-26 21:52:27 ERROR RobotClientImpl:108 - IOException - Unable to connect to localhost:25557. Connection refused (Connection refused)
+2017-12-26 21:52:27 ERROR HomeController:64 - move: Socket is not connected...
+2017-12-26 21:52:27 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:52:27 INFO  HomeController:43 - RobotClient: not null
+2017-12-26 21:53:38 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2017-12-26 21:53:53 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2017-12-26 21:53:54 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:53:54 INFO  HomeController:43 - RobotClient: not null
+2017-12-26 21:54:24 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2017-12-26 21:54:25 ERROR RobotClientImpl:56 - IOException connect: offline
+2017-12-26 21:54:25 INFO  HomeController:43 - RobotClient: not null

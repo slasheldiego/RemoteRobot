@@ -9,8 +9,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
-
 import com.robot.bean.SocketInfo;
 
 //@Component

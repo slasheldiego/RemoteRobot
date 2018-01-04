@@ -5382,3 +5382,31 @@ java.net.ConnectException: Connection refused (Connection refused)
 2017-12-25 12:54:33 INFO  HomeController:56 - Socket is connected...
 2017-12-25 12:54:40 INFO  RobotClient:98 - hostName: localhost, port: 25557
 2017-12-25 12:54:40 INFO  HomeController:56 - Socket is connected...
+2018-01-03 20:44:19 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 20:44:21 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 20:44:21 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:10:11 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 21:10:12 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:10:12 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:13:42 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 21:14:11 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:14:11 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:19:20 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 21:19:21 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:19:21 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:19:55 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 21:19:56 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:19:56 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:19:59 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:19:59 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:20:00 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:20:00 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:20:01 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:20:01 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:20:32 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-03 21:20:33 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:20:33 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:20:56 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:20:56 INFO  HomeController:40 - RobotClient: not null
+2018-01-03 21:21:08 ERROR RobotClient:56 - IOException connect: offline
+2018-01-03 21:21:08 INFO  HomeController:40 - RobotClient: not null

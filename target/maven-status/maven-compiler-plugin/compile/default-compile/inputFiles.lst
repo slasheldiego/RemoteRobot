@@ -1,4 +1,7 @@
 /Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/config/WebConfig.java
 /Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/config/RootConfig.java
+/Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/bean/RobotMovement.java
 /Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/web/HomeController.java
 /Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/config/RemoteRobotWebAppInitializer.java
+/Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/client/RobotClient.java
+/Users/diegobenavides/eclipse-workspace/remote-robot/src/main/java/com/robot/bean/SocketInfo.java

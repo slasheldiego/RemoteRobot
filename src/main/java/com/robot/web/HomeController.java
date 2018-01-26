@@ -2,6 +2,9 @@ package com.robot.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,7 @@ public class HomeController {
 	
 	private RobotClient client;
 	private final String server = "localhost";
-	private final int port = 25557;
+	private final int port = 55000;
 	
 	@Autowired
 	public HomeController(RobotClient client) {
@@ -34,25 +37,23 @@ public class HomeController {
 	public String home(Model model) {
 		model.addAttribute("Move",new RobotMovement());
 
-		initClient(server,port);
-		if( client != null ) {
+		//initClient(server,port);
+		if( client.getSocketInfo().getState().equals("Online") ) {
 			model.addAttribute("info",client.getSocketInfo());
 			logger.info("RobotClient: not null");
 		}else {
 			SocketInfo info = new SocketInfo("Offline");
 			model.addAttribute("info",info);
 			logger.error("RobotClient or Socket: null - Offline");
+			initClient(server,port);
 		}
 		return "home";
 	}
 	
 	@RequestMapping(value = "move",method=RequestMethod.POST)
 	public String move(Model model,
-			@ModelAttribute("Move") RobotMovement move) {
-			if( client.isSocketAlive(server, port) ) {
-					if(client.getSocketInfo().getState().equals("Offline")) {
-						initClient(server,port);
-					}
+			@ModelAttribute("Move") RobotMovement move) throws UnsupportedEncodingException, IOException, InterruptedException {
+			if( client.getSocketInfo().getState().equals("Online")) {
 				logger.info("move: Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
 				sendCoordinates(move);
@@ -62,6 +63,7 @@ public class HomeController {
 				client.setSocketInfo("Offline");
 				SocketInfo info = new SocketInfo("Offline");
 				model.addAttribute("info",info);
+				initClient(server,port);
 				return "redirect:/";
 			}
 		
@@ -71,7 +73,7 @@ public class HomeController {
 			client.connect(server,port);
 	}
 	
-	public void sendCoordinates(RobotMovement move) {
+	public void sendCoordinates(RobotMovement move) throws UnsupportedEncodingException, IOException, InterruptedException {
 		client.send(move.getS(), move.getX(), move.getY(), move.getZ());
 	}
 	

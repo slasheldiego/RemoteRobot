@@ -2,6 +2,7 @@ package com.robot.client;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -20,10 +21,14 @@ public class RobotClient {
 	
 	private Socket socket;
 	private PrintStream ps;
-	private SocketInfo inf;
+	private SocketInfo inf = new SocketInfo("Online");;
 	//private final Thread heartbeatThread;
 	//private boolean tryToReconnect = true;
 	//private long heartbeatDelayMillis = 5000;
+	
+	public RobotClient(){
+		connect("localhost", 55000);
+	}
 	
 	public void closeCon() {
 		try {
@@ -38,12 +43,13 @@ public class RobotClient {
 	}
 	
 	public void connect(String server, int port) {
-		inf = new SocketInfo("Online");
         try {
 			socket = new Socket(server, port);
 			ps = new PrintStream(socket.getOutputStream());
 	        inf.setState("Online");
 	        logger.info("Socket is connected");
+	        /*ps.write("y".getBytes("UTF-8"));
+            ps.flush();*/
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,13 +65,28 @@ public class RobotClient {
         
 	}
 	
-	public void send(String s, float x, float y, float z) {
+	public void send(String s, float x, float y, float z) throws UnsupportedEncodingException, IOException, InterruptedException {
 		if( ps != null ) {
 			if(s.equals("y")) {
-				ps.println(s);
+				/*ps.println(s);
 				ps.println(x);
 				ps.println(y);
-				ps.println(z);
+				ps.println(z);*/
+				ps.write(s.getBytes("UTF-8"));
+	            	ps.flush();
+	            	Thread.sleep(1000);
+	            	ps.write(String.valueOf(x).getBytes("UTF-8"));
+	            	ps.flush();
+	            	Thread.sleep(1000);
+	            	ps.write(String.valueOf(y).getBytes("UTF-8"));
+	            	ps.flush();
+	            	Thread.sleep(1000);
+	            	ps.write(String.valueOf(z).getBytes("UTF-8"));
+	            	ps.flush();
+	            	Thread.sleep(1000);
+	            	ps.write(s.getBytes("UTF-8"));
+	            	ps.flush();
+	            	//ps.close();
 			}else {
 				ps.println("exit");
 			}

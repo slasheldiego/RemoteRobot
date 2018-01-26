@@ -5405,3 +5405,15 @@ java.net.ConnectException: Connection refused (Connection refused)
 2017-12-25 13:21:26 INFO  HomeController:56 - move: Socket is connected...
 2017-12-25 13:21:41 INFO  RobotClient:98 - hostName: localhost, port: 25557
 2017-12-25 13:21:41 INFO  HomeController:56 - move: Socket is connected...
+2018-01-23 21:35:49 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-23 21:35:50 ERROR RobotClient:56 - IOException connect: offline
+2018-01-23 21:35:50 INFO  HomeController:40 - RobotClient: not null
+2018-01-23 21:36:33 INFO  Version:30 - HV000001: Hibernate Validator 5.4.1.Final
+2018-01-23 21:36:34 ERROR RobotClient:56 - IOException connect: offline
+2018-01-23 21:36:34 INFO  HomeController:40 - RobotClient: not null
+2018-01-23 21:37:46 INFO  RobotClient:46 - Socket is connected
+2018-01-23 21:37:46 INFO  HomeController:40 - RobotClient: not null
+2018-01-23 21:38:04 INFO  RobotClient:98 - hostName: localhost, port: 25557
+2018-01-23 21:38:04 INFO  HomeController:56 - move: Socket is connected...
+2018-01-23 21:38:12 INFO  RobotClient:98 - hostName: localhost, port: 25557
+2018-01-23 21:38:12 INFO  HomeController:56 - move: Socket is connected...

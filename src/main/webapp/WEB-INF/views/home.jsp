@@ -206,9 +206,26 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Move</button>
+	              <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
+	                <button type="submit" class="btn btn-primary" >Move</button>
+	              </c:if>
+	              <c:if test="${ not empty info.action && info.action == 'Connect'}">
+	                <button type="submit" class="btn btn-primary" disabled>Move</button>
+	              </c:if>
               </div>
             </sf:form>
+            <div class="box-body">
+	            <c:if test="${ not empty info.action && info.action == 'Connect'}">
+					<sf:form method="GET" action="connect" >
+						<button type="submit" class="btn btn-primary">${info.action}</button>
+	            		</sf:form>
+				</c:if>
+	            <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
+					<sf:form method="GET" action="disconnect" >
+						<button type="submit" class="btn btn-primary">${info.action}</button>
+	            		</sf:form>
+				</c:if>
+			</div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

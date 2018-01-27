@@ -36,17 +36,7 @@ public class HomeController {
 	@RequestMapping(method=GET)
 	public String home(Model model) {
 		model.addAttribute("Move",new RobotMovement());
-
-		//initClient(server,port);
-		if( client.getSocketInfo().getState().equals("Online") ) {
-			model.addAttribute("info",client.getSocketInfo());
-			logger.info("RobotClient: not null");
-		}else {
-			SocketInfo info = new SocketInfo("Offline");
-			model.addAttribute("info",info);
-			logger.error("RobotClient or Socket: null - Offline");
-			initClient(server,port);
-		}
+		model.addAttribute("info", client.getSocketInfo());
 		return "home";
 	}
 	
@@ -57,15 +47,51 @@ public class HomeController {
 				logger.info("move: Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
 				sendCoordinates(move);
-		    		return "home";
+		    		return "redirect:/";
 			}else {
 				logger.error("move: Socket is not connected...");
 				client.setSocketInfo("Offline");
-				SocketInfo info = new SocketInfo("Offline");
+				SocketInfo info = new SocketInfo("Offline","Connect");
 				model.addAttribute("info",info);
 				initClient(server,port);
 				return "redirect:/";
 			}
+		
+	}
+	
+	@RequestMapping(value = "connect",method=RequestMethod.GET)
+	public String connect(Model model,
+			@ModelAttribute("Move") RobotMovement move) {
+		logger.info("Connect: Try to connect Socket ...");
+		
+		initClient(server,port);
+		if( client.getSocketInfo().getState().equals("Online") ) {
+			model.addAttribute("info",client.getSocketInfo());
+			client.setSocketAction("Disconnect");
+			logger.info("RobotClient: not null");
+		}else {
+			client.setSocketInfo("Offline");
+			client.setSocketAction("Connect");
+			model.addAttribute("info",client.getSocketInfo());
+			logger.error("RobotClient or Socket: null - Offline");
+		}
+
+		model.addAttribute("info",client.getSocketInfo());
+		
+		return "redirect:/";
+		
+	}
+	
+	@RequestMapping(value = "disconnect",method=RequestMethod.GET)
+	public String disconnect(Model model,
+			@ModelAttribute("Move") RobotMovement move) {
+		logger.info("Disconnect: Try to disconnect Socket ...");
+		
+		client.closeCon();
+
+		model.addAttribute("info",client.getSocketInfo());
+		
+		return "redirect:/";
 		
 	}
 	

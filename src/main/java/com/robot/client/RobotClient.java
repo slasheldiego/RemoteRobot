@@ -21,24 +21,28 @@ public class RobotClient {
 	
 	private Socket socket;
 	private PrintStream ps;
-	private SocketInfo inf = new SocketInfo("Online");;
+	private SocketInfo inf;
 	//private final Thread heartbeatThread;
 	//private boolean tryToReconnect = true;
 	//private long heartbeatDelayMillis = 5000;
 	
 	public RobotClient(){
-		connect("localhost", 55000);
+		//connect("localhost", 55000);
+		inf = new SocketInfo("Offline","Connect");
 	}
 	
 	public void closeCon() {
 		try {
 			socket.close();
 			ps.close();
+			inf.setState("Offline");
+			inf.setAction("Connect");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.error(e + ": Problem with close");
 			e.printStackTrace();
 			inf.setState("Offline");
+			inf.setAction("Connect");
 		}
 	}
 	
@@ -104,6 +108,10 @@ public class RobotClient {
 	
 	public void setSocketInfo(String state) {
 		this.inf.setState(state);
+	}
+	
+	public void setSocketAction(String action) {
+		this.inf.setAction(action);
 	}
 	
 	public boolean isSocketAlive(String hostName, int port) {

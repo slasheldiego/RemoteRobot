@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +36,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(method=GET)
-	public String home(Model model) {
+	public String home(Model model,HttpServletRequest request) {
 		model.addAttribute("Move",new RobotMovement());
 		model.addAttribute("info", client.getSocketInfo());
+		model.addAttribute("localip",request.getRemoteAddr());
 		return "home";
 	}
 	

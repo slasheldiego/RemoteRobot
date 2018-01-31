@@ -52,8 +52,8 @@ public class RobotClient {
 			ps = new PrintStream(socket.getOutputStream());
 	        inf.setState("Online");
 	        logger.info("Socket is connected");
-	        /*ps.write("y".getBytes("UTF-8"));
-            ps.flush();*/
+	        ps.write("y".getBytes("UTF-8"));
+            ps.flush();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,10 +75,10 @@ public class RobotClient {
 				/*ps.println(s);
 				ps.println(x);
 				ps.println(y);
-				ps.println(z);*/
+				ps.println(z);
 				ps.write(s.getBytes("UTF-8"));
 	            	ps.flush();
-	            	Thread.sleep(1000);
+	            	Thread.sleep(1000);*/
 	            	ps.write(String.valueOf(x).getBytes("UTF-8"));
 	            	ps.flush();
 	            	Thread.sleep(1000);

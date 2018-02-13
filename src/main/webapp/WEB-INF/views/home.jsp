@@ -188,46 +188,94 @@
               <i class="fa fa-times"></i></button>
           </div>
         </div>
-        <div class="box-body">
-            <!-- form start -->
-            <sf:form method="POST" action="move" commandName="Move">
-              <div class="box-body">
-                <div class="form-group">
-                  <sf:label path="s" >Message</sf:label>: 
-  			      <sf:input path="s" class="form-control"/>
-  			      <sf:label path="x" >x</sf:label>: 
-  			      <sf:input path="x" class="form-control"/>
-  			      <sf:label path="y" >y</sf:label>: 
-  			      <sf:input path="y" class="form-control"/>
-  			      <sf:label path="z" >z</sf:label>: 
-  			      <sf:input path="z" class="form-control"/>
-                </div>
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-	              <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
-	                <button type="submit" class="btn btn-primary" >Move</button>
-	              </c:if>
-	              <c:if test="${ not empty info.action && info.action == 'Connect'}">
-	                <button type="submit" class="btn btn-primary" disabled>Move</button>
-	              </c:if>
-              </div>
-            </sf:form>
-            <div class="box-body">
-	            <c:if test="${ not empty info.action && info.action == 'Connect'}">
-					<sf:form method="GET" action="connect" >
-						<button type="submit" class="btn btn-primary">${info.action}</button>
-	            		</sf:form>
-				</c:if>
-	            <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
-					<sf:form method="GET" action="disconnect" >
-						<button type="submit" class="btn btn-primary">${info.action}</button>
-	            		</sf:form>
-				</c:if>
-			</div>
+        
+        <div class="row">
+        		<div class="col-md-6">
+          	<div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Desired position</h3>
+            </div>
+	        <div class="box-body">
+	            <!-- form start -->
+	            <sf:form method="POST" action="move" commandName="Move">
+	              <div class="box-body">
+	                <div class="form-group">
+	                  <sf:label path="s" >Message</sf:label>: 
+	  			      <sf:input path="s" class="form-control"/>
+	  			      <sf:label path="x" >x</sf:label>: 
+	  			      <sf:input path="x" class="form-control"/>
+	  			      <sf:label path="y" >y</sf:label>: 
+	  			      <sf:input path="y" class="form-control"/>
+	  			      <sf:label path="z" >z</sf:label>: 
+	  			      <sf:input path="z" class="form-control"/>
+	                </div>
+	              </div>
+	              <!-- /.box-body -->
+	
+	              <div class="box-footer">
+		              <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
+		                <button type="submit" class="btn btn-primary" >Move</button>
+		              </c:if>
+		              <c:if test="${ not empty info.action && info.action == 'Connect'}">
+		                <button type="submit" class="btn btn-primary" disabled>Move</button>
+		              </c:if>
+	              </div>
+	            </sf:form>
+	            <div class="box-body">
+		            <c:if test="${ not empty info.action && info.action == 'Connect'}">
+						<sf:form method="GET" action="connect" >
+							<button type="submit" class="btn btn-primary">${info.action}</button>
+		            		</sf:form>
+					</c:if>
+		            <c:if test="${ not empty info.action && info.action == 'Disconnect'}">
+						<sf:form method="GET" action="disconnect" >
+							<button type="submit" class="btn btn-primary">${info.action}</button>
+		            		</sf:form>
+					</c:if>
+				</div>
+	        </div>
+	        <!-- /.box-body -->
+        
+        		</div>
+        		</div>
+        		
+        		<div class="col-md-6">
+	          	<div class="box">
+		            <div class="box-header with-border">
+		              <h3 class="box-title">Preceding position</h3>
+		            </div>
+	            </div>
+	              <div class="box-body">
+	                <form class="form-horizontal">
+		              <div class="box-body">
+		                <div class="form-group">
+		                  <label for="pre_x" class="col-sm-2 control-label">x:</label>
+		
+		                  <div class="col-sm-10">
+		                    <input type="text" class="form-control" id="pre_x" placeholder="${pre_x}">
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="pre_y" class="col-sm-2 control-label">y:</label>
+		
+		                  <div class="col-sm-10">
+		                    <input type="text" class="form-control" id="pre_y" placeholder="${pre_y}">
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="pre_z" class="col-sm-2 control-label">z:</label>
+		
+		                  <div class="col-sm-10">
+		                    <input type="text" class="form-control" id="pre_z" placeholder="${pre_z}">
+		                  </div>
+		                </div>
+		              </div>
+		              <!-- /.box-body -->
+		            </form>
+	              </div>
+	              <!-- /.box-body -->
+            </div>
         </div>
-        <!-- /.box-body -->
         <div class="box-footer">
           Footer
         </div>

@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,6 +41,16 @@ public class HomeController {
 		model.addAttribute("Move",new RobotMovement());
 		model.addAttribute("info", client.getSocketInfo());
 		model.addAttribute("localip",request.getRemoteAddr());
+		ArrayList<String> list;
+		if(( list = client.readMessage()) != null ) {
+			model.addAttribute("pre_x",list.get(0));
+			model.addAttribute("pre_y",list.get(1));
+			model.addAttribute("pre_z",list.get(2));
+		}else {
+			model.addAttribute("pre_x","none");
+			model.addAttribute("pre_y","none");
+			model.addAttribute("pre_z","none");
+		}
 		return "home";
 	}
 	

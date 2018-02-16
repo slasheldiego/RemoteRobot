@@ -11,23 +11,21 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.robot.web")
+@ComponentScan("com.robot.*")
 public class WebConfig extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public ViewResolver viewResolver() {
-		InternalResourceViewResolver resolver =
-		new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		//resolver.setExposeContextBeansAsAttributes(true);
-		resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
-		return resolver;
-		//return new TilesViewResolver();
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+	    viewResolver.setViewClass(JstlView.class);
+	    viewResolver.setPrefix("/WEB-INF/views/");
+	    viewResolver.setSuffix(".jsp");
+	    return viewResolver;
 	}
 	
 	@Override

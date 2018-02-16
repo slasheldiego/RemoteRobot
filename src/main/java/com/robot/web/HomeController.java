@@ -22,7 +22,7 @@ import com.robot.client.RobotClient;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping({"/","/home"})
 public class HomeController {
 	
 	final static Logger logger = Logger.getLogger(HomeController.class);

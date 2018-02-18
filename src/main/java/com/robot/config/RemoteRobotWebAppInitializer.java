@@ -5,7 +5,6 @@ import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.robot.config.RootConfig;
 import com.robot.config.WebConfig;
 
 public class RemoteRobotWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

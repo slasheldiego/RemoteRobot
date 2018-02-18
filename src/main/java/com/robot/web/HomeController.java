@@ -27,14 +27,11 @@ public class HomeController {
 	
 	final static Logger logger = Logger.getLogger(HomeController.class);
 	
+	@Autowired
 	private RobotClient client;
 	private final String server = "localhost";
 	private final int port = 55000;
 	
-	@Autowired
-	public HomeController(RobotClient client) {
-		this.client = client;
-	}
 	
 	@RequestMapping(method=GET)
 	public String home(Model model,HttpServletRequest request) {
@@ -42,7 +39,7 @@ public class HomeController {
 		model.addAttribute("info", client.getSocketInfo());
 		model.addAttribute("localip",request.getRemoteAddr());
 		ArrayList<String> list;
-		if(( list = client.readMessage()) != null ) {
+		if(( list = client.readMessage() ) != null ) {
 			model.addAttribute("pre_x",list.get(0));
 			model.addAttribute("pre_y",list.get(1));
 			model.addAttribute("pre_z",list.get(2));
@@ -56,11 +53,25 @@ public class HomeController {
 	
 	@RequestMapping(value = "move",method=RequestMethod.POST)
 	public String move(Model model,
-			@ModelAttribute("Move") RobotMovement move) throws UnsupportedEncodingException, IOException, InterruptedException {
+			@ModelAttribute("Move") RobotMovement move) {
 			if( client.getSocketInfo().getState().equals("Online")) {
 				logger.info("move: Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
-				sendCoordinates(move);
+				try {
+					sendCoordinates(move);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				}
 		    		return "redirect:/";
 			}else {
 				logger.error("move: Socket is not connected...");

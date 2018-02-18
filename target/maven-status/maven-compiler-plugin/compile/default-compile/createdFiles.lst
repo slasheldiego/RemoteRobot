@@ -1,7 +1,10 @@
+com/robot/config/WebSecurityConfig.class
 com/robot/config/RemoteRobotWebAppInitializer.class
 com/robot/bean/RobotMovement.class
 com/robot/client/RobotClient.class
 com/robot/web/HomeController.class
 com/robot/config/RootConfig.class
+com/robot/web/LoginController.class
 com/robot/bean/SocketInfo.class
 com/robot/config/WebConfig.class
+com/robot/config/SecurityWebApplicationInitializer.class

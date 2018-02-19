@@ -26,7 +26,7 @@ public class RobotClientImpl implements RobotClient {
 	private PrintStream ps;
 	private SocketInfo inf;
 	private BufferedReader br;
-	private boolean r = false;
+	private boolean read_message_status = false;
 	//private final Thread heartbeatThread;
 	//private boolean tryToReconnect = true;
 	//private long heartbeatDelayMillis = 5000;
@@ -42,7 +42,7 @@ public class RobotClientImpl implements RobotClient {
 			ps.close();
 			inf.setState("Offline");
 			inf.setAction("Connect");
-			r = false;
+			read_message_status = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.error(e + ": Problem with close");
@@ -103,7 +103,7 @@ public class RobotClientImpl implements RobotClient {
 		            	ps.write(s.getBytes("UTF-8"));
 		            	//ps.println("");
 		            	ps.flush();
-		            	r = true;
+		            	read_message_status = true;
 				}else {
 					ps.println("exit");
 				}
@@ -136,25 +136,25 @@ public class RobotClientImpl implements RobotClient {
 		double z = 0;
 		char c;
 		try {
-			System.out.println("AQUI???1");
-			if(br != null && r) {
+			if(br != null && read_message_status) {
+				logger.info("Read message from Robot Server Init ...");
 				while((c = (char) br.read()) != 'x') {
 		            line = line + c;
 				}
-				System.out.println(line);
+				logger.info(line);
 				
 				line = "";
 				while((c = (char) br.read()) != '|') {
 		            line = line + c;
 				}
 				x_len = Double.parseDouble(line);
-				System.out.println("x_len:"+x_len);
+				logger.info("x_len:"+x_len);
 				
 				line = "";
 				while((c = (char) br.read()) != 'y') {
 		            line = line + c;
 				}
-				System.out.println("x:"+line);
+				logger.info("Add to Coordinate List x:"+line);
 				x = Double.parseDouble(line);
 				if(x < 1) { x = Math.round(x); }
 				list.add(""+x);
@@ -164,13 +164,13 @@ public class RobotClientImpl implements RobotClient {
 		            line = line + c;
 				}
 				y_len = Double.parseDouble(line);
-				System.out.println("y_len:"+y_len);
+				logger.info("y_len:"+y_len);
 				
 				line = "";
 				while((c = (char) br.read()) != 'z') {
 		            line = line + c;
 				}
-				System.out.println("y:"+line);
+				logger.info("Add to Coordinate List y:"+line);
 				y = Double.parseDouble(line);
 				if(y < 1) { y = Math.round(x); }
 				list.add(""+y);
@@ -180,25 +180,30 @@ public class RobotClientImpl implements RobotClient {
 		            line = line + c;
 				}
 				z_len = Double.parseDouble(line);
-				System.out.println("z_len:"+z_len);
+				logger.info("z_len:"+z_len);
 				
 				line = "";
 				while((c = (char) br.read()) != '|') {
 		            line = line + c;
 				}
-				System.out.println("z:"+line);
+				logger.info("Add to Coordinate List z:"+line);
 				z = Double.parseDouble(line);
 				if(z < 1) { z = Math.round(z); }
 				list.add(""+z);
 			}else {
 				list = null;
+				read_message_status = false;
+				logger.warn("BufferedReader null or Sent Corrdinates Failure ...");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			inf.setState("Offline");
 			logger.error("ps: null - offline - " + e.getMessage());
-		}
+			list = null;
+			setSocketAction("Connect");
+			read_message_status = false;
+		} 
 		return list;
 	}
 	

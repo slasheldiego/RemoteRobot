@@ -36,7 +36,6 @@ public class HomeController {
 	@RequestMapping(method=GET)
 	public String home(Model model,HttpServletRequest request) {
 		model.addAttribute("Move",new RobotMovement());
-		model.addAttribute("info", client.getSocketInfo());
 		model.addAttribute("localip",request.getRemoteAddr());
 		ArrayList<String> list;
 		if(( list = client.readMessage() ) != null ) {
@@ -48,13 +47,14 @@ public class HomeController {
 			model.addAttribute("pre_y","none");
 			model.addAttribute("pre_z","none");
 		}
+		model.addAttribute("info", client.getSocketInfo());
 		return "home";
 	}
 	
 	@RequestMapping(value = "move",method=RequestMethod.POST)
 	public String move(Model model,
 			@ModelAttribute("Move") RobotMovement move) {
-			if( client.getSocketInfo().getState().equals("Online")) {
+			if( client.getSocketInfo().getState().equals("Online") ) {
 				logger.info("move: Socket is connected...");
 				model.addAttribute("info",client.getSocketInfo());
 				try {

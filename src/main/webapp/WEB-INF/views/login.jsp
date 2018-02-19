@@ -4,7 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ page isELIgnored="false" %>
-<%@page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +40,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  	<c:if test="${empty error && empty msg}">
+  	<c:if test="${empty error && empty msg && empty expired}">
 		<p class="login-box-msg">Sign in to start your session</p>
 	</c:if>
     <c:if test="${not empty error}">
@@ -49,6 +48,9 @@
 	</c:if>
 	<c:if test="${not empty msg}">
 		<p class="login-box-msg text-aqua">${msg}</p>
+	</c:if>
+	<c:if test="${not empty expired}">
+		<p class="login-box-msg text-red">${expired}</p>
 	</c:if>
 
     <form name="myForm" action="<c:url value='/login' />" method="POST">

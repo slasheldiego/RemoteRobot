@@ -28,37 +28,37 @@ public class HomeController {
 	final static Logger logger = Logger.getLogger(HomeController.class);
 	
 	@Autowired
-	private RobotClient client;
-	private final String server = "localhost";
-	private final int port = 55000;
+	private RobotClient robotClient;
 	
 	
 	@RequestMapping(method=GET)
 	public String home(Model model,HttpServletRequest request) {
 		model.addAttribute("Move",new RobotMovement());
 		model.addAttribute("localip",request.getRemoteAddr());
-		ArrayList<String> list;
-		if(( list = client.readMessage() ) != null ) {
-			model.addAttribute("pre_x",list.get(0));
-			model.addAttribute("pre_y",list.get(1));
-			model.addAttribute("pre_z",list.get(2));
-		}else {
-			model.addAttribute("pre_x","none");
-			model.addAttribute("pre_y","none");
-			model.addAttribute("pre_z","none");
-		}
-		model.addAttribute("info", client.getSocketInfo());
+		model.addAttribute("info", robotClient.getSocketInfo());
 		return "home";
 	}
 	
 	@RequestMapping(value = "move",method=RequestMethod.POST)
 	public String move(Model model,
 			@ModelAttribute("Move") RobotMovement move) {
-			if( client.getSocketInfo().getState().equals("Online") ) {
+			if( robotClient.getSocketInfo().getState().equals("Online") ) {
 				logger.info("move: Socket is connected...");
-				model.addAttribute("info",client.getSocketInfo());
+				model.addAttribute("info",robotClient.getSocketInfo());
 				try {
 					sendCoordinates(move);
+					robotClient.setRead_message_status(true);
+					ArrayList<String> list;
+					if(( list = robotClient.readMessage() ) != null ) {
+						robotClient.setSocketX(Float.parseFloat(list.get(0)));
+						robotClient.setSocketY(Float.parseFloat(list.get(1)));
+						robotClient.setSocketZ(Float.parseFloat(list.get(2)));
+					}else {
+						robotClient.setSocketX(-1);
+						robotClient.setSocketY(-1);
+						robotClient.setSocketZ(-1);
+					}
+					robotClient.setRead_message_status(false);
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -75,10 +75,10 @@ public class HomeController {
 		    		return "redirect:/";
 			}else {
 				logger.error("move: Socket is not connected...");
-				client.setSocketInfo("Offline");
+				robotClient.setSocketInfo("Offline");
 				SocketInfo info = new SocketInfo("Offline","Connect");
 				model.addAttribute("info",info);
-				initClient(server,port);
+				initClient();
 				return "redirect:/";
 			}
 		
@@ -89,19 +89,31 @@ public class HomeController {
 			@ModelAttribute("Move") RobotMovement move) {
 		logger.info("Connect: Try to connect Socket ...");
 		
-		initClient(server,port);
-		if( client.getSocketInfo().getState().equals("Online") ) {
-			model.addAttribute("info",client.getSocketInfo());
-			client.setSocketAction("Disconnect");
+		initClient();
+		if( robotClient.getSocketInfo().getState().equals("Online") ) {
+			model.addAttribute("info",robotClient.getSocketInfo());
+			robotClient.setSocketAction("Disconnect");
 			logger.info("RobotClient: not null");
+			robotClient.setRead_message_status(true);
+			ArrayList<String> list;
+			if(( list = robotClient.readMessage() ) != null ) {
+				robotClient.setSocketX(Float.parseFloat(list.get(0)));
+				robotClient.setSocketY(Float.parseFloat(list.get(1)));
+				robotClient.setSocketZ(Float.parseFloat(list.get(2)));
+			}else {
+				robotClient.setSocketX(-1);
+				robotClient.setSocketY(-1);
+				robotClient.setSocketZ(-1);
+			}
+			robotClient.setRead_message_status(false);
 		}else {
-			client.setSocketInfo("Offline");
-			client.setSocketAction("Connect");
-			model.addAttribute("info",client.getSocketInfo());
+			robotClient.setSocketInfo("Offline");
+			robotClient.setSocketAction("Connect");
+			model.addAttribute("info",robotClient.getSocketInfo());
 			logger.error("RobotClient or Socket: null - Offline");
 		}
 
-		model.addAttribute("info",client.getSocketInfo());
+		model.addAttribute("info",robotClient.getSocketInfo());
 		
 		return "redirect:/";
 		
@@ -112,20 +124,20 @@ public class HomeController {
 			@ModelAttribute("Move") RobotMovement move) {
 		logger.info("Disconnect: Try to disconnect Socket ...");
 		
-		client.closeCon();
+		robotClient.closeCon();
 
-		model.addAttribute("info",client.getSocketInfo());
+		model.addAttribute("info",robotClient.getSocketInfo());
 		
 		return "redirect:/";
 		
 	}
 	
-	public void initClient(String server, int port) {
-			client.connect(server,port);
+	public void initClient() {
+			robotClient.connect();
 	}
 	
 	public void sendCoordinates(RobotMovement move) throws UnsupportedEncodingException, IOException, InterruptedException {
-		client.send(move.getS(), move.getX(), move.getY(), move.getZ());
+		robotClient.send(move.getX(), move.getY(), move.getZ());
 	}
 	
 }

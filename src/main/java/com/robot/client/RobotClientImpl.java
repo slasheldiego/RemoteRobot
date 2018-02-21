@@ -27,6 +27,8 @@ public class RobotClientImpl implements RobotClient {
 	private SocketInfo inf;
 	private BufferedReader br;
 	private boolean read_message_status = false;
+	private String server;
+	private int port;
 	//private final Thread heartbeatThread;
 	//private boolean tryToReconnect = true;
 	//private long heartbeatDelayMillis = 5000;
@@ -34,6 +36,8 @@ public class RobotClientImpl implements RobotClient {
 	public RobotClientImpl(){
 		//connect("localhost", 55000);
 		inf = new SocketInfo("Offline","Connect");
+		server = "localhost";
+		port = 55000;
 	}
 	
 	public void closeCon() {
@@ -42,7 +46,7 @@ public class RobotClientImpl implements RobotClient {
 			ps.close();
 			inf.setState("Offline");
 			inf.setAction("Connect");
-			read_message_status = false;
+			setRead_message_status(false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.error(e + ": Problem with close");
@@ -52,7 +56,7 @@ public class RobotClientImpl implements RobotClient {
 		}
 	}
 	
-	public void connect(String server, int port) {
+	public void connect() {
         try {
 			socket = new Socket(server, port);
 			ps = new PrintStream(socket.getOutputStream());
@@ -76,11 +80,10 @@ public class RobotClientImpl implements RobotClient {
         
 	}
 	
-	public void send(String s, float x, float y, float z)  {
+	public void send(float x, float y, float z)  {
 		
 		try {
 			if( ps != null ) {
-				if(s.equals("y")) {
 					//ps.println(s);
 					/*ps.println(x);
 					ps.println(y);
@@ -100,13 +103,10 @@ public class RobotClientImpl implements RobotClient {
 		            	ps.write(String.valueOf(z).getBytes("UTF-8"));
 		            	ps.flush();
 		            	Thread.sleep(1000);
-		            	ps.write(s.getBytes("UTF-8"));
+		            	ps.write("y".getBytes("UTF-8"));
 		            	//ps.println("");
 		            	ps.flush();
-		            	read_message_status = true;
-				}else {
-					ps.println("exit");
-				}
+		            	setRead_message_status(true);
 			}else {
 				inf.setState("Offline");
 				logger.info("ps: null - offline");
@@ -136,7 +136,7 @@ public class RobotClientImpl implements RobotClient {
 		double z = 0;
 		char c;
 		try {
-			if(br != null && read_message_status) {
+			if(br != null && isRead_message_status()) {
 				logger.info("Read message from Robot Server Init ...");
 				while((c = (char) br.read()) != 'x') {
 		            line = line + c;
@@ -192,7 +192,7 @@ public class RobotClientImpl implements RobotClient {
 				list.add(""+z);
 			}else {
 				list = null;
-				read_message_status = false;
+				setRead_message_status(false);
 				logger.warn("BufferedReader null or Sent Corrdinates Failure ...");
 			}
 		} catch (IOException e) {
@@ -202,7 +202,8 @@ public class RobotClientImpl implements RobotClient {
 			logger.error("ps: null - offline - " + e.getMessage());
 			list = null;
 			setSocketAction("Connect");
-			read_message_status = false;
+			setRead_message_status(false);
+			closeCon();
 		} 
 		return list;
 	}
@@ -218,6 +219,18 @@ public class RobotClientImpl implements RobotClient {
 	
 	public void setSocketAction(String action) {
 		this.inf.setAction(action);
+	}
+	
+	public void setSocketX(float x) {
+		this.inf.setX_coor(x);
+	}
+	
+	public void setSocketY(float y) {
+		this.inf.setY_coor(y);
+	}
+	
+	public void setSocketZ(float z) {
+		this.inf.setZ_coor(z);
 	}
 	
 	public boolean isSocketAlive(String hostName, int port) {
@@ -245,5 +258,13 @@ public class RobotClientImpl implements RobotClient {
 			inf.setState("Offline");
 		}
 		return isAlive;
+	}
+
+	public boolean isRead_message_status() {
+		return read_message_status;
+	}
+
+	public void setRead_message_status(boolean read_message_status) {
+		this.read_message_status = read_message_status;
 	}
 }

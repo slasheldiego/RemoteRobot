@@ -6,10 +6,14 @@ import com.robot.bean.SocketInfo;
 
 public interface RobotClient {
 	public void closeCon();
-	public void connect(String server, int port);
-	public void send(String s, float x, float y, float z);
+	public void connect();
+	public void send(float x, float y, float z);
 	public ArrayList<String> readMessage() ;
 	public SocketInfo getSocketInfo();
 	public void setSocketInfo(String state);
 	public void setSocketAction(String action);
+	public void setSocketX(float x);
+	public void setSocketY(float y);
+	public void setSocketZ(float z);
+	public void setRead_message_status(boolean read_message_status);
 }

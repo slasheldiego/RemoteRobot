@@ -202,8 +202,6 @@
 	            <sf:form method="POST" action="move" commandName="Move">
 	              <div class="box-body">
 	                <div class="form-group">
-	                  <sf:label path="s" >Message</sf:label>: 
-	  			      <sf:input path="s" class="form-control"/>
 	  			      <sf:label path="x" >x</sf:label>: 
 	  			      <sf:input path="x" class="form-control"/>
 	  			      <sf:label path="y" >y</sf:label>: 
@@ -254,21 +252,21 @@
 		                  <label for="pre_x" class="col-sm-2 control-label">x:</label>
 		
 		                  <div class="col-sm-10">
-		                    <input type="text" class="form-control" id="pre_x" placeholder="${pre_x}">
+		                    <input type="text" class="form-control" id="pre_x" placeholder="<c2:out value="${info.x_coor}" />">
 		                  </div>
 		                </div>
 		                <div class="form-group">
 		                  <label for="pre_y" class="col-sm-2 control-label">y:</label>
 		
 		                  <div class="col-sm-10">
-		                    <input type="text" class="form-control" id="pre_y" placeholder="${pre_y}">
+		                    <input type="text" class="form-control" id="pre_y" placeholder="<c2:out value="${info.y_coor}" />">
 		                  </div>
 		                </div>
 		                <div class="form-group">
 		                  <label for="pre_z" class="col-sm-2 control-label">z:</label>
 		
 		                  <div class="col-sm-10">
-		                    <input type="text" class="form-control" id="pre_z" placeholder="${pre_z}">
+		                    <input type="text" class="form-control" id="pre_z" placeholder="<c2:out value="${info.z_coor}" />">
 		                  </div>
 		                </div>
 		              </div>
